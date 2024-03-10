@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shadering w/furry</title>
+    <link rel="stylesheet" type="text/css" href="../Home.css">
+    <link rel="stylesheet" type="text/css" href="Sdf.css">
+    <header>
+        <h1 class="centered">Sdf's</h1>
+        <p class="centered">Sdfs, geometry and raycasting</p>
+    </header>
+</head>
+
+<body>
+    <main>
+        <section>
+            <h2>What are sdfs?</h2>
+            <p>These are the base of 3d computer calculation and are in simple words a function that traduces 2d coordinates into 3d</p>
+            <p>We define an SDF as a signed distance function in which a raycast that collides with it will return a value that gives a distanc. This is very useful as it lets us draw ANY shape just by calculating the function that would give us a distance in geometry. for example a vector (1,2,0) gets its module with 12+2 2+02 well in here let's think a sphere</p>
+            <Math>
+                f(x,y,z) = sqrt(x²+y²+z²)+radius³
+            </Math>
+            <p>Well to get a the distance a point would be to the sphere let's say point (1,0,0) and radius = 1 well we would use the function</p>
+            <Math>
+                sqrt(x²+y²+z²)-radius
+            </Math>
+            <p>(yes for a sphere is the same as the module minus radius)  and substitute the point so 12-1 so the point is on the sphere and negative means it would be inside it and anything more it is not on the sphere. So to compute a sphere we get the sdf and cast rays from a “camera” to every pixel and pass the rays through the sdf and it the distance its = 0 we get the intersection between that RAY and a virtual PLANE and colour the pixel corresponding to where the plane is located at with any colour. (depending on how far that plane is is what people in games consider FOV and to translate it to a radial value (radians or degrees) we just… do the cross product)</p>
+            <p>Now we ddon't actually do that, instead we will input our ray start point into the sdf to get the closest points distance to our camera and advancd that amount towards the ray direction. We do so to optimize the amount of maths our computer has to do. Now if the distance on any iteration of the same ray is equal to 0 or at least is lower than 0.001 we will paint htat point in x color. Now if we want to optimize even more we will say that if the amount of distance the amount the ray has to go trough is greater than X or has already been trough X distance, beign X a really high number, then it stops calculating and it does not draw anything. This is refered to as render distance.</p>
+            <p>Now lets say we want to draw lighting on that sphere. Well firs we'll define a light source lets say (2.0,2.0,-2.0) and we will get each computed point on the sphere cast another ray towards the light and reasoning that if we look directly at something shininh by ligth the ligth is more noticeable if the angle our view does with the ligth  one is smaller. In other words it's more noticeable a ligth source on something if we look at it  from the ligths persepective. Knowing that the mathematical formula we will use is the dot product to compute this</p>
+            <Math>
+                Light(Lray,Camray) = Lray ⋅ Camray = |Lray|*|Camray|*cos(θ)
+            </Math>
+            <p>after all this i decided to sprinkle it a little bit and to put the cherry on top i made the ligths spin and painted them</p>
+        </section>
+        <section>
+            <h2>Code snippet</h2>
+            <pre><code>
+                void mainImage( out vec4 fragColor, in vec2 fragCoord )
+                    {
+                        vec2 uv = fragCoord - (iResolution.xy / 2.);
+                        uv /= min(iResolution.x, iResolution.y) / 2.;
+
+                        float z = length(uv);
+                        z = sqrt(1. - z*z);
+
+                        vec3 sphere = vec3(uv, z);
+                        sphere *= smoothstep(0.001, 0.1, z);
+
+                        vec3 light1 = vec3(cos(iTime) * 1.5, 2.0, sin(iTime) * 1.5);
+                        light1 *= 1. / pow(distance(light1, sphere), 2.);
+                        vec3 light2 = vec3(sin(iTime*1.5) * 0.5, sin(iTime*0.3)*2.0, cos(iTime*0.5) * 1.5);
+                        light2 *= 1. / pow(distance(light2, sphere), 2.);
+
+                        float lighting = dot(sphere, light1);
+                        float lighting2 = dot(sphere, light2);
+
+                        fragColor = vec4(0.1);
+                        fragColor += vec4(lighting*0.3+lighting2*0.5,lighting*0.7,lighting2*0.32,1.);
+                    }
+            </code></pre>
+            <h2>Now the actual computed shader</h2>
+        </section>
+        <canvas id="space" class="container2"></canvas>
+        <script src="Shader2.js"></script>
+    </main>
+</body>
+</html>

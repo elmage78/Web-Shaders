@@ -1,0 +1,13 @@
+Math{
+    display: block;
+    white-space: pre-wrap;
+    font-size: 0.9em;
+    background-color: #2b2b2b;
+    padding: 0px;
+    border-radius: 5px;
+    text-align: center;
+}
+.container2{
+    width: 800px;
+    height: 600px;
+}
