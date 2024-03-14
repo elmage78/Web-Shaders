@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl7/1L_dstPt3HV5HzF6Gvk/e3s4Wz6iJgD/+ub2oU" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Shadering w/furry</title>
     <link rel="stylesheet" type="text/css" href="../Home.css">
     <link rel="stylesheet" type="text/css" href="Sdf.css">
     <header>
         <h1 class="centered">Sdf's</h1>
-        <p class="centered">Sdfs, geometry and raycasting</p>
+        <p class="centered">Sdfs, geometria y rayos</p>
     </header>
 </head>
 
 <body>
+    <a href="../index.html" title="Home" class="home-button">
+        <i class="fas fa-home"></i>
+    </a>
     <main>
         <section>
-            <h2>What are sdfs?</h2>
-            <p>These are the base of 3d computer calculation and are in simple words a function that traduces 2d coordinates into 3d</p>
-            <p>We define an SDF as a signed distance function in which a raycast that collides with it will return a value that gives a distanc. This is very useful as it lets us draw ANY shape just by calculating the function that would give us a distance in geometry. for example a vector (1,2,0) gets its module with 12+2 2+02 well in here let's think a sphere</p>
+            <h2>¿Qué son los SDF?</h2>
+            <p>Estas son la base del cálculo por computadora en 3D y, en palabras simples, son una función que traduce coordenadas 2D en 3D</p>
+            <p>Definimos un SDF como una función de distancia con signo en la que un raycast que choca con él devolverá un valor que proporciona una distancia. Esto es muy útil ya que nos permite dibujar CUALQUIER forma simplemente calculando la función que nos daría una distancia en geometría. por ejemplo, un vector (1,2,0) obtiene su módulo con 12+2 2+02, bueno, aquí pensemos en una esfera</p>
             <Math>
-                f(x,y,z) = sqrt(x²+y²+z²)+radius³
+                f(x,y,z) = sqrt(x²+y²+z²)+radio³
             </Math>
-            <p>Well to get a the distance a point would be to the sphere let's say point (1,0,0) and radius = 1 well we would use the function</p>
+            <p>Bueno, para obtener la distancia que estaría un punto a la esfera, digamos punto (1,0,0) y radio = 1, bueno, usaríamos la función</p>
             <Math>
-                sqrt(x²+y²+z²)-radius
+                sqrt(x²+y²+z²)-radio
             </Math>
-            <p>(yes for a sphere is the same as the module minus radius)  and substitute the point so 12-1 so the point is on the sphere and negative means it would be inside it and anything more it is not on the sphere. So to compute a sphere we get the sdf and cast rays from a “camera” to every pixel and pass the rays through the sdf and it the distance its = 0 we get the intersection between that RAY and a virtual PLANE and colour the pixel corresponding to where the plane is located at with any colour. (depending on how far that plane is is what people in games consider FOV and to translate it to a radial value (radians or degrees) we just… do the cross product)</p>
-            <p>Now we ddon't actually do that, instead we will input our ray start point into the sdf to get the closest points distance to our camera and advancd that amount towards the ray direction. We do so to optimize the amount of maths our computer has to do. Now if the distance on any iteration of the same ray is equal to 0 or at least is lower than 0.001 we will paint htat point in x color. Now if we want to optimize even more we will say that if the amount of distance the amount the ray has to go trough is greater than X or has already been trough X distance, beign X a really high number, then it stops calculating and it does not draw anything. This is refered to as render distance.</p>
-            <p>Now lets say we want to draw lighting on that sphere. Well firs we'll define a light source lets say (2.0,2.0,-2.0) and we will get each computed point on the sphere cast another ray towards the light and reasoning that if we look directly at something shininh by ligth the ligth is more noticeable if the angle our view does with the ligth  one is smaller. In other words it's more noticeable a ligth source on something if we look at it  from the ligths persepective. Knowing that the mathematical formula we will use is the dot product to compute this</p>
+            <p>(sí, para una esfera es lo mismo que el módulo menos el radio) y sustituye el punto por 12-1 para que el punto esté en la esfera y negativo significa que estaría dentro de ella y cualquier cosa más, no está en la esfera. Entonces, para calcular una esfera, obtenemos el sdf y proyectamos rayos desde una "cámara" a cada píxel y pasamos los rayos a través del sdf y la distancia es = 0, obtenemos la intersección entre ese RAYO y un PLANO virtual y coloreamos el píxel correspondiente. hasta donde se encuentra el avión con cualquier color. (dependiendo de qué tan lejos esté ese plano es lo que la gente en los juegos considera FOV y para traducirlo a un valor radial (radianes o grados) simplemente… hacemos el producto cruzado)</p>
+            <p>Ahora en realidad no hacemos eso, en lugar de eso, ingresaremos el punto de inicio de nuestro rayo en el sdf para obtener la distancia de los puntos más cercanos a nuestra cámara y avanzaremos esa cantidad hacia la dirección del rayo. Lo hacemos para optimizar la cantidad de cálculos que nuestra computadora tiene que hacer. Ahora, si la distancia en cualquier iteración del mismo rayo es igual a 0 o al menos es inferior a 0,001, pintaremos ese punto en el color x. Ahora si queremos optimizar aún más diremos que si la cantidad de distancia que tiene que recorrer el rayo es mayor que X o ya ha recorrido X distancia, siendo X un número realmente alto, entonces deja de calcular y no dibuja nada. Esto se conoce como distancia de renderizado.</p>
+            <p>Ahora digamos que queremos dibujar iluminación en esa esfera. Bueno, primero definiremos una fuente de luz, digamos (2.0,2.0,-2.0) y haremos que cada punto calculado en la esfera emita otro rayo hacia la luz y razonaremos que si miramos directamente algo que brilla con luz, la luz es Se nota más si el ángulo que nuestra visión hace con la luz es menor. En otras palabras, es más notable una fuente de luz sobre algo si lo miramos desde la perspectiva de la luz. Sabiendo que la fórmula matemática que usaremos es el producto escalar para calcular esto</p>
             <Math>
-                Light(Lray,Camray) = Lray ⋅ Camray = |Lray|*|Camray|*cos(θ)
+                Luz(Lray,Camray) = Lrayo ⋅ Camararayo = |Lrayo|*|Camararayo|*cos(θ)
             </Math>
-            <p>after all this i decided to sprinkle it a little bit and to put the cherry on top i made the ligths spin and painted them</p>
+            <p>después de todo esto decidí espolvorearlo un poquito y para poner la cereza encima hice girar las luces y las pinté</p>
         </section>
         <section>
             <h2>Code snippet</h2>
@@ -57,7 +61,7 @@
                         fragColor += vec4(lighting*0.3+lighting2*0.5,lighting*0.7,lighting2*0.32,1.);
                     }
             </code></pre>
-            <h2>Now the actual computed shader</h2>
+            <h2>Y... el resultado</h2>
         </section>
         <canvas id="space" class="container2"></canvas>
         <script src="Shader2.js"></script>

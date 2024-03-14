@@ -5,8 +5,8 @@
     <link rel="stylesheet" type="text/css" href="Home.css">
     <script src="Home.js"></script>
     <header>
-        <h1 class="centered">Welcome to Shaders</h1>
-        <p class="centered">A not so in depth guide to shadering</p>
+        <h1 class="centered">Bienvenidos a shaders</h1>
+        <p class="centered">Una guía sin mucho detalle de shaders</p>
     </header>
 </head>
 
@@ -15,25 +15,25 @@
         <div class="dropdown">
             <button onclick="Dropdown()" class="dropbtn">Fragment Shaders</button>
             <div id="myDropdown" class="dropdown-content">
-              <a href="Shaders\Screensaver.html">Screensaver</a>
-              <a href="Shaders/Sdf.html">Sdf introduction</a>
+              <a href="Shaders\Screensaver.html">Salvapantallas</a>
+              <a href="Shaders/Sdf.html">Sdf introducción</a>
             </div>
           </div>
     </nav>
     <main>
         <section>
-            <h2>Types of shaders</h2>
+            <h2>Tipos de Shaders</h2>
             <p>There are many different types of shaders, including:</p>
             <ul>
-                <li>Vertex shaders: These shaders operate on each individual vertex of a 3D model.</li>
-                <li>Pixel shaders: These shaders operate on each individual pixel of a 2D image or 3D scene.</li>
-                <li>Geometry shaders: These shaders operate on entire shapes or groups of vertices.</li>
-                <li>Compute shaders: These shaders operate on large sets of data and can be used for general-purpose computing on the GPU.</li>
+                <li>Shaders de vértices: estos Shaders operan en cada vértice individual de un modelo 3D.</li>
+                <li>Shaders de píxeles: estos Shaders operan en cada píxel individual de una imagen 2D o escena 3D.</li>
+                <li>Shaders de geometría: estos Shaders operan en formas enteras o grupos de vértices.</li>
+                <li>Shaders de computación: estos Shaders operan con grandes conjuntos de datos y se pueden usar para computación de propósito general en la GPU.</li>
             </ul>
         </section>
         <section>
-            <h2>Example of a shader program</h2>
-            <p>Here's an example of a simple shader program:</p>
+            <h2>Ejemplo</h2>
+            <p>Este sería un ejemplo de un shader</p>
             <pre><code>
                 #version 330 core
 
@@ -43,20 +43,20 @@
             </code></pre>
         </section>
         <section>
-            <p>in this specific shader we state the version and color the output so it's basically coloring with a color #ff7523</p>
+            <p>en este Shaders específico indicamos la versión y coloreamos la salida, por lo que básicamente se colorea con un color #ff7523</p>
         </section>
         <section>
-            <h2>What is a shader?</h2>
+            <h2>¿Qué es un shader?</h2>
             <p>
-                A Shader is computation of a math equations with different variables in which the result is a 4 digit vector (x,y,z,w) with the first numbers being numbers representing the color of a pixel <b>rgb</b> and the w represents the alpha of the same pixel, this values are managed in a hexadecimal value so that the minimum value is 00 and the max is ff. You may recognize this format from inputting #ffffff well if you don't already know these values represent rgb of something. So for a purple(red + blue)-half-transparent pixel you would get ff 00 ff 7E.
+                Un Shader es un cálculo de ecuaciones matemáticas con diferentes variables en las que el resultado es un vector de 4 dígitos (x,y,z,w) donde los primeros números representan el color de un píxel <b>rgb</b> y la w representa el alfa del mismo píxel, estos valores se manejan en un valor hexadecimal para que el valor mínimo sea 00 y el máximo sea ff. Es posible que reconozcas bien este formato al ingresar #ffffff si aún no sabes que estos valores representan rgb de algo. Entonces, para un píxel semitransparente violeta (rojo + azul), obtendrías ff 00 ff 7E.
             </p>
-            <h2>The basics</h2>
+            <h2>Los inicios</h2>
             <p>
-                Now for shaders you usually get a function with more than 4 variables and some constants normally you would get a the coordinate of a pixel the problem is different screens with different resolutions get different coordinates for the last pixel say (720,720) or (1980,1080) so… what to do? As default there is a term we called UV which is represented by the formula f(x,y) = fragCoord.xy / Resolution.xy wich for any point of any screen gives a normalized vector with max (1,1) and minimum (0,0) if we pass that directly to the vector 4 output you get this image (red = x coordinates and y = green)
+                Ahora, para los sombreadores, generalmente obtienes una función con más de 4 variables y algunas constantes. Normalmente obtendrías la coordenada de un píxel. El problema es que diferentes pantallas con diferentes resoluciones obtienen diferentes coordenadas para el último píxel, digamos (720,720) o (1980,1080). ) ¿Entonces lo que hay que hacer? Por defecto hay un término que llamamos UV que está representado por la fórmula f(x,y) = fragCoord.xy / Resolución.xy que para cualquier punto de cualquier pantalla da un vector normalizado con máximo (1,1) y mínimo ( 0,0) si pasamos eso directamente a la salida del vector 4, obtendrás esta imagen (rojo = coordenadas x e y = verde)
             </p>
             <div class="container">
-                <img src="uvmap.png">
-                <p>So as we can see the 0,0 coordinates are on the bottom left corner and 1,1 is on the top rigth just as anyone would expect. Now with these coordinates we can finally create shaders. I will first explain the mathematical equation for each shader and then the actual conversion to shaders what i will not explain though is the conversion from maths to code because it is easy no reason and for big shaders it is fun to do.</p>
+                <img src="uvmap.png" class="rounded">
+                <p>Como podemos ver, las coordenadas 0,0 están en la esquina inferior izquierda y 1,1 está en la esquina superior derecha, tal como cualquiera esperaría. Ahora con estas coordenadas finalmente podemos crear sombreadores. Primero explicaré la ecuación matemática para cada sombreador y luego la conversión real a sombreadores. Lo que no explicaré es la conversión de matemáticas a código porque es fácil, no hay motivo y para los sombreadores grandes es divertido hacerlo.</p>
             </div>
         </section>
     </main> 

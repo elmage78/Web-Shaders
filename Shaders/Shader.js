@@ -87,8 +87,8 @@ function render(time) {
 requestAnimationFrame(render);
 
 function resizeCanvas(gl,Canvas) {
-    Canvas.width = 800*2;
-    Canvas.height= 600*2;
+    Canvas.width = 800;
+    Canvas.height= 600;
 }
 
 function createProgram(gl, vs, fs) {
